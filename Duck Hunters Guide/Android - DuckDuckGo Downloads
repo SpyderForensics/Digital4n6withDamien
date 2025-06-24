@@ -1,0 +1,19 @@
+-- App: Android DuckDuckGo
+-- App Version: 5.238.0
+-- Database Location: com.duckduckgo.mobile.android\databases\downloads.db
+-- Parse Download History
+-- Author: Damien Attoe
+
+SELECT
+	id,
+	downloadId AS "Download ID",
+	CASE downloadStatus
+		WHEN 0 THEN 'Started (' || downloadStatus || ')'
+		WHEN 1 THEN 'Completed (' || downloadStatus || ')'
+		ELSE 'Unknown (' || downloadStatus || ')'
+	END AS "Download Status",
+	fileName AS "File Name",
+	ROUND(contentLength / 1024.0, 2) AS "Size (KB)",
+	filePath AS "Download Path",
+	DATETIME(createdat) AS "Download Date (Local)"
+FROM downloads
